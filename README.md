@@ -1,12 +1,12 @@
 ## Token Price CLI
 
-### Installation
+### :wrench: Installation
 
 ```shell
 npm install
 ```
 
-### Execution
+### :computer: Execution
 
 - Development
 
@@ -19,6 +19,11 @@ npm run start:dev
 ```shell
 npm run build
 npm run start
+```
+
+### :heavy_check_mark: Unit tests
+
+```shell
 ```
 
 ### Requirements
@@ -35,7 +40,6 @@ curl [host]:[port]/mainnet/eth
 curl [host]:[port]/uniswap/[token_name]
 ```
 
-### TODO
+### Todo
 
-- Jest setting
 - Get prices from chainlink oracle + unit test
