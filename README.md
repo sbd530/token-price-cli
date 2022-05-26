@@ -1,45 +1,50 @@
-## Token Price CLI
+# Token Price CLI
 
-### :wrench: Installation
+## Description
 
-```shell
+**Provides real-time prices of several crypto currencies to clients using CLI.**
+
+## :wrench: Installation
+
+```bash
 npm install
 ```
 
-### :computer: Execution
+## :computer: Execution
 
 - Development
 
-```shell
+```bash
 npm run start:dev
 ```
 
 - Production
 
-```shell
+```bash
 npm run build
 npm run start
 ```
 
-### :heavy_check_mark: Unit tests
+## :heavy_check_mark: Unit tests
 
-```shell
+```bash
+npm test
 ```
 
-### Requirements
+## Requirements
 
 - Show Mainnet ETH Price stream
 
-```shell
+```bash
 curl [host]:[port]/mainnet/eth 
 ```
 
 - Show Uniswap ERC20 token price stream
 
-```shell
+```bash
 curl [host]:[port]/uniswap/[token_name]
 ```
 
-### Todo
+## Todos
 
 - Get prices from chainlink oracle + unit test
