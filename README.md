@@ -36,7 +36,7 @@ npm test
 - Show Mainnet ETH Price stream
 
 ```bash
-curl [host]:[port]/mainnet/eth 
+curl [host]:[port]/mainnet/eth
 ```
 
 - Show Uniswap ERC20 token price stream
