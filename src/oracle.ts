@@ -1,13 +1,25 @@
-import Web3 from "web3"
-import aggregatorV3InterfaceABI from "./abi"
+import Web3 from 'web3'
+import { AbiItem } from 'web3-utils'
+import abi from './abi'
+import 'dotenv/config'
+import { Token } from './token.enum'
 
-const web3 = new Web3("https://kovan.infura.io/v3/0x9326BFA02ADD2366b30bacB125260Af641031331")
+const url = process.env.ETH_USD_PROVIDER || ''
+const address = process.env.ETH_USD_ADDRESS || ''
 
-const addr = "0x9326BFA02ADD2366b30bacB125260Af641031331"
-// const priceFeed = new web3.eth.Contract(aggregatorV3InterfaceABI, addr)
-const priceFeed = new web3.eth.Contract(null, addr)
-priceFeed.methods.latestRoundData().call()
-    .then((roundData: any) => {
-        // Do something with roundData
-        console.log("Latest Round Data", roundData)
-    })
+const web3 = new Web3(url)
+const priceFeed = new web3.eth.Contract(abi as AbiItem[], address)
+
+interface RoundData {
+    roundId: number,
+    answer: number,
+    startedAt: number,
+    updatedAt: number,
+    answeredInRound: number
+}
+
+let priceCache = 0
+
+export async function getPrice(token?: Token): Promise<RoundData> {
+    return await priceFeed.methods.latestRoundData().call()
+}

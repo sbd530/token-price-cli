@@ -9,13 +9,18 @@ class DataStream extends Readable {
     _read(size?: number) { }
 }
 
+const arr = ['a\na', 'b\nb', 'c\nc', 'd\nd']
+let index = 0
+
 const streamer = (stream: Readable) => {
     return setInterval(() => {
         // clear cli
         stream.push('\x1B[2J\x1B[3J\x1B[H')
         // show contents
-        stream.push('zzzzzaabsb', 'utf-8')
-    }, 100)
+        stream.push(arr[index], 'utf-8')
+
+        index = (index + 1) % 4
+    }, 3000)
 }
 
 const server = createServer((req, res) => {
