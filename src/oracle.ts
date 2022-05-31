@@ -20,6 +20,6 @@ interface RoundData {
 
 let priceCache = 0
 
-export async function getPrice(token?: Token): Promise<RoundData> {
+export async function latestRoundData(token?: string): Promise<RoundData> {
     return await priceFeed.methods.latestRoundData().call()
 }

@@ -1,5 +1,7 @@
 import { createServer } from 'http'
 import { Readable, ReadableOptions } from 'stream'
+import { latestRoundData } from './oracle'
+import { tokens } from './tokens.config'
 
 class DataStream extends Readable {
     constructor(opts?: ReadableOptions) {
@@ -9,18 +11,27 @@ class DataStream extends Readable {
     _read(size?: number) { }
 }
 
-const arr = ['a\na', 'b\nb', 'c\nc', 'd\nd']
-let index = 0
+const priceCache = new Map()
+
+setInterval(() => {
+    process.nextTick(() =>
+        Promise.all(
+            tokens().map(tokenInfo => latestRoundData(tokenInfo.name)
+                .then(roundData => priceCache.set(tokenInfo.name, roundData.answer))
+            ))
+    )
+}, 1000)
 
 const streamer = (stream: Readable) => {
     return setInterval(() => {
         // clear cli
         stream.push('\x1B[2J\x1B[3J\x1B[H')
         // show contents
-        stream.push(arr[index], 'utf-8')
+        // stream.push(arr[index], 'utf-8')
+        stream.push(priceCache.get('ETH'), 'utf-8')
 
-        index = (index + 1) % 4
-    }, 3000)
+        // index = (index + 1) % 4
+    }, 1000)
 }
 
 const server = createServer((req, res) => {

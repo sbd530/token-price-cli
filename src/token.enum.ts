@@ -1,4 +1,4 @@
-export const enum Token {
+export enum Token {
     ETH = "ETH",
     DAI = "DAI",
 }
