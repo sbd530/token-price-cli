@@ -2,7 +2,6 @@ import Web3 from 'web3'
 import { AbiItem } from 'web3-utils'
 import abi from './abi'
 import 'dotenv/config'
-import { Token } from './token.enum'
 
 const url = process.env.ETH_USD_PROVIDER || ''
 const address = process.env.ETH_USD_ADDRESS || ''

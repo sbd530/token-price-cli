@@ -22,15 +22,12 @@ setInterval(() => {
     )
 }, 1000)
 
-const streamer = (stream: Readable) => {
+const streamer = (stream: Readable, token: string) => {
     return setInterval(() => {
         // clear cli
         stream.push('\x1B[2J\x1B[3J\x1B[H')
         // show contents
-        // stream.push(arr[index], 'utf-8')
         stream.push(priceCache.get('ETH'), 'utf-8')
-
-        // index = (index + 1) % 4
     }, 1000)
 }
 
@@ -46,18 +43,27 @@ const server = createServer((req, res) => {
 
     const stream = new DataStream()
     stream.pipe(res)
-    const interval = streamer(stream)
 
-    req.on('close', () => {
+    let token: string;
+    switch (req.url) {
+        case "/mainnet/eth":
+            token = "ETH"
+            break;
+        default:
+            token = "ETH"
+            break;
+    }
+
+    const interval = streamer(stream, token)
+
+    req.on("close", () => {
         stream.destroy()
         clearInterval(interval)
     })
 })
 
-server.on('error', (err) => { throw err })
-
+server.on("error", (err) => { throw err })
 const port = process.env.PORT || 3010
-
 server.listen(port, () => {
     console.log(`Listening on localhost:${port}`)
 })
